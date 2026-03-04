@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Two Proportion Z Test</title>
+</head>
+
+<body>
+
+<h2>Two Proportion Z Test</h2>
+
+<input id="x" placeholder="Sample 1 (example: 1,0,1,1,0)">
+
+<br><br>
+
+<input id="y" placeholder="Sample 2 (example: 1,1,0,0,1)">
+
+<br><br>
+
+<button onclick="runTest()">Run Test</button>
+
+<p id="output"></p>
+
+<script>
+
+function runTest(){
+
+let x=document.getElementById("x").value.split(",").map(Number);
+let y=document.getElementById("y").value.split(",").map(Number);
+
+fetch("/test",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({x:x,y:y})
+
+})
+
+.then(res=>res.json())
+
+.then(data=>{
+
+document.getElementById("output").innerHTML=
+"Z Statistic: "+data.z_statistic+
+"<br>P Value: "+data.p_value+
+"<br>Decision: "+data.decision;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
